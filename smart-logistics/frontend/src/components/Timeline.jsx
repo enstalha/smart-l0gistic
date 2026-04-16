@@ -24,7 +24,6 @@ export default function Timeline({ fleets, activeFilter, deletePackage, loading 
             <div className="text-sm text-slate-500 animate-pulse text-center mt-10">Synchronizing AI Multi-Fleet network...</div>
           ) : null}
 
-          {/* Iterate through distinct vehicles */}
           {fleets.filter(f => activeFilter === 'All' || f.id === activeFilter).map(fleet => (
              <div key={fleet.id} className="mb-10 last:mb-0">
                <div className="sticky top-0 bg-slate-900/90 backdrop-blur-md py-3 px-4 rounded-xl border border-slate-800 mb-4 flex items-center justify-between shadow-lg z-20">

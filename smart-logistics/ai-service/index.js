@@ -10,8 +10,7 @@ app.use(express.json());
 
 app.post('/api/ai/optimize', (req, res) => {
     const { packages } = req.body;
-    
-    // Seed 3 baseline vehicles deployed across distinct NYC coordinates
+
     let fleet = [
        { id: 'Unit 402', color: '#6366f1', pos: [40.7128, -74.0060], route: [], currentTimeMinutes: 8*60, capacity: 100, load: 0 },
        { id: 'Unit 405', color: '#10b981', pos: [40.7350, -73.9600], route: [], currentTimeMinutes: 8*60, capacity: 100, load: 0 },
@@ -20,16 +19,13 @@ app.post('/api/ai/optimize', (req, res) => {
 
     let unassigned = [...packages];
 
-    // Priority clustering (VRP smart matching)
     while (unassigned.length > 0) {
         let pack = unassigned.shift();
-        
-        // Evaluate Match Score against all fleet vehicles
+
         let bestVehicle = fleet.reduce((prev, current) => {
             return (calculateMatchScore(pack, current) > calculateMatchScore(pack, prev)) ? current : prev;
         });
 
-        // Add package to optimal vehicle
         let dist = getDistance(bestVehicle.pos, pack.pos);
         let travelTime = (dist * 3) + 10 + Math.floor(Math.random() * 15);
         bestVehicle.currentTimeMinutes += travelTime;
@@ -50,7 +46,6 @@ app.post('/api/ai/optimize', (req, res) => {
         bestVehicle.load += (pack.weight || 10);
     }
 
-    // Force base node insertions before transit
     fleet.forEach(v => {
        v.route.unshift({
            id: v.id + '_base',

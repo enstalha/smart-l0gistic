@@ -1,16 +1,9 @@
-# React + Vite
+# 🖥️ Frontend (React & Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The presentation layer of Smart Logistics. Built with React and stylized using pure Tailwind CSS for a premium "Glassmorphism" aesthetic.
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠 Features
+- **Interactive Multi-Fleet Rendering**: Dynamic Polylines mapping 3 distinct vehicle routes using Leaflet and OSRM integration.
+- **Click-to-Drop Action**: Clicking anywhere on the Dark-Mode map instantly dispatches a package via coordinates back to the AI loop.
+- **Component Based Structure**: Abstracted UI into clean, distinct files (`LogisticsMap`, `Timeline`, `KPIWidgets`).
+- **Live Fleet Telemetry**: Real-time KPI counters tracking Matrix re-calcs, active drops, and server load capacity.

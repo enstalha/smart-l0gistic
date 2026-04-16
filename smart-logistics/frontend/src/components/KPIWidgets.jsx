@@ -11,7 +11,7 @@ export default function KPIWidgets({ totalPackages, aiCalcs }) {
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       {widgets.map((kpi, idx) => (
          <div key={idx} className={`bg-slate-900/50 backdrop-blur-sm rounded-3xl p-6 shadow-xl border ${kpi.border} flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden group`}>
-            {/* Ambient Glow */}
+            
             <div className={`absolute -right-10 -top-10 w-32 h-32 rounded-full ${kpi.bg} blur-3xl group-hover:scale-150 transition-transform duration-700`}></div>
             
             <div className="flex items-center justify-between mb-4 relative z-10">

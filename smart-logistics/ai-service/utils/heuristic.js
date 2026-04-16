@@ -10,7 +10,7 @@ function getDistance(pos1, pos2) {
 
 function calculateMatchScore(pack, vehicle) {
     const distanceScore = 100 - (getDistance(vehicle.pos, pack.pos) * 2);
-    // Simple heuristic: if vehicle can hold the package weight, boost its score immensely.
+
     const capacityScore = ((vehicle.capacity - vehicle.load) >= (pack.weight || 10)) ? 50 : -500;
     return distanceScore + capacityScore;
 }

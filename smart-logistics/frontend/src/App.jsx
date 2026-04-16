@@ -11,6 +11,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [aiCalcs, setAiCalcs] = useState(1842); 
   const [activeFilter, setActiveFilter] = useState('All');
+  const [alertData, setAlertData] = useState(null);
 
   const fetchFleets = () => {
     fetch('http://localhost:3000/api/routes')
@@ -76,19 +77,43 @@ function App() {
       .finally(() => setLoading(false));
   };
 
+  const simulateHazard = () => {
+    setLoading(true);
+    setAiCalcs(prev => prev + 58); 
+    fetch('http://localhost:3000/api/trigger-alert')
+      .then(res => res.json())
+      .then(data => {
+        setAlertData(data);
+        fetchFleets();
+      })
+      .finally(() => setLoading(false));
+  };
+
   const handleMapClick = (latlng) => addPackage(latlng.lat, latlng.lng);
   const totalPackages = fleets.reduce((acc, f) => acc + f.route.length, 0);
 
   return (
     <div className="min-h-screen bg-slate-950 font-sans text-slate-200 pb-20 selection:bg-indigo-500/30">
-      <Navbar addPackage={addPackage} loading={loading} />
-      
+      <Navbar addPackage={addPackage} simulateHazard={simulateHazard} loading={loading} />
+
+      <div className={`transition-all duration-500 ease-in-out origin-top overflow-hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 ${alertData ? 'max-h-32 opacity-100 transform translate-y-0 relative z-[999]' : 'max-h-0 opacity-0 transform -translate-y-4 pointer-events-none'}`}>
+        <div className="bg-red-950/40 border border-red-500/30 p-4 rounded-2xl shadow-2xl shadow-red-500/10 flex items-center gap-4 relative overflow-hidden backdrop-blur-md">
+          <div className="absolute top-0 left-0 bottom-0 w-1.5 bg-red-500 shadow-[0_0_10px_rgba(239,68,68,1)]"></div>
+          <div className="text-red-500 text-3xl animate-bounce drop-shadow-[0_0_10px_rgba(239,68,68,0.5)]">⚠️</div>
+          <div>
+            <h3 className="text-red-400 font-bold tracking-widest text-sm uppercase">AI Predictive Incident Alert</h3>
+            <p className="text-slate-300 font-medium mt-0.5">{alertData?.message}</p>
+          </div>
+          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-red-500/10 to-transparent"></div>
+        </div>
+      </div>
+
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         <KPIWidgets totalPackages={totalPackages} aiCalcs={aiCalcs} />
         <FleetFilter activeFilter={activeFilter} setActiveFilter={setActiveFilter} fleets={fleets} />
         
         <div className="grid grid-cols-1 xl:grid-cols-5 gap-8">
-          <LogisticsMap fleets={fleets} fleetGeometries={fleetGeometries} activeFilter={activeFilter} handleMapClick={handleMapClick} />
+          <LogisticsMap fleets={fleets} fleetGeometries={fleetGeometries} activeFilter={activeFilter} handleMapClick={handleMapClick} alertData={alertData} />
           <Timeline fleets={fleets} activeFilter={activeFilter} deletePackage={deletePackage} loading={loading} />
         </div>
       </main>
