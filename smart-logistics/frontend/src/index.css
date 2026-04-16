@@ -1,7 +1,44 @@
+@import 'leaflet/dist/leaflet.css';
+
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
-  background-color: #f8fafc; 
-  color: #0f172a;
+  background-color: #020617; /* slate-950 */
+  color: #f1f5f9; /* slate-100 */
+}
+
+.leaflet-container {
+    background-color: #020617 !important;
+    border-radius: 2rem;
+}
+
+/* Custom DivIcon for glowing truck */
+.glowing-truck-icon {
+  background: none;
+  border: none;
+}
+
+.glowing-truck-icon .pulse {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background: #3b82f6;
+  border-radius: 50%;
+  box-shadow: 0 0 15px #3b82f6, 0 0 30px #3b82f6;
+  animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.6); opacity: 0.8; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+.animated-polyline {
+  stroke-dasharray: 15;
+  animation: routeDash 20s linear infinite;
+}
+
+@keyframes routeDash {
+  to { stroke-dashoffset: -100; }
 }
